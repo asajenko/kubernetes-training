@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  echo-server:
+    image: landrzejewski/echo-server:v2
+    restart: always
+    deploy:
+      replicas: 5
+  postgres:
+    image: postgres:14
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=training
+  portainer:
+    image: portainer/portainer-ce:2.15.1-alpine
+    restart: always
+    ports:
+      - "10005:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data/portainer:/data
