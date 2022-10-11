@@ -192,7 +192,9 @@ docker stack deploy --compose-file docker-compose.yml my-stack
 ```
 docker stack rm my-stack
 ```
-
+```
+docker build --platform linux/x86_64 --tag landrzejewski/platform .
+```
 
 
 

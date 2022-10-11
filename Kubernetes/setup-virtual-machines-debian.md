@@ -124,12 +124,16 @@ sudo nano /etc/hosts
 - Sklonuj maszynę master dwa razy i ustaw nazwy oraz adresy IP dla node1 i node2
 - Zainicjuj klaster na maszynie master
 ```
+sudo rm /etc/containerd/config.toml
+sudo systemctl restart containerd
+```
+```
 sudo kubeadm init
 ```
 - Dołącz pozostałe maszyny (node1, node2) postępując zgodnie z wyświetlaną instrukcją
 - Zainstaluj warstwę sieciową
 ```
-kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 ```
 - Pozwól na logowanie użytkownika root na maszynie master
 ```
