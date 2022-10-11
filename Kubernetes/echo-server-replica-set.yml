@@ -25,6 +25,7 @@ spec:
           image: landrzejewski/echo-server:v1
           ports:
             - containerPort: 8080
+              name: http
           resources:
             requests:
               memory: 128M
