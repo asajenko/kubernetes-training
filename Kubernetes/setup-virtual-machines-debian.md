@@ -13,8 +13,8 @@ bcdedit /set hypervisorlaunchtype off
 - Ram: 2048 Mb
 - CPU: x2
 - Zainstalowane pakiety
-  - Server SSH
-  - Podstawowe narzędzia systemowe
+    - Server SSH
+    - Podstawowe narzędzia systemowe
 # Przygotowanie maszyny bazowej (po czystej instalacji systemu)
 - Wyłącz cd/dvd jako źródło pakietów - usuń linię rozpoczynającą się od `deb cdrom`
 ```
@@ -92,12 +92,46 @@ sed -i '/ swap / s/^/#/' /etc/fstab
 ```
 - Zainstaluj kubeadm https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm
 ```
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+br_netfilter
+EOF
+
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+sudo sysctl --system
+```
+```
+sudo apt-get update && sudo apt-get install -y apt-transport-https
+```
+```
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+```
+```
+cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+```
+```
 sudo apt-get update
-sudo apt-get install -y apt-transport-https ca-certificates curl
+```
+```
+sudo apt-get install -y apt-transport-https ca-certificates
+```
+```
 sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+```
+```
 echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+```
+```
 sudo apt-get update
+```
+```
 sudo apt-get install -y kubelet kubeadm kubectl
+```
+```
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
 - Ustaw adress IP
@@ -124,16 +158,12 @@ sudo nano /etc/hosts
 - Sklonuj maszynę master dwa razy i ustaw nazwy oraz adresy IP dla node1 i node2
 - Zainicjuj klaster na maszynie master
 ```
-sudo rm /etc/containerd/config.toml
-sudo systemctl restart containerd
-```
-```
 sudo kubeadm init
 ```
 - Dołącz pozostałe maszyny (node1, node2) postępując zgodnie z wyświetlaną instrukcją
 - Zainstaluj warstwę sieciową
 ```
-kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 ```
 - Pozwól na logowanie użytkownika root na maszynie master
 ```
