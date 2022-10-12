@@ -16,4 +16,10 @@ spec:
                 name: echo-server-service
                 port:
                   number: 80
-
+          - path: /sqrt
+            pathType: Prefix
+            backend:
+              service:
+                name: sqrt-service
+                port:
+                  number: 80
