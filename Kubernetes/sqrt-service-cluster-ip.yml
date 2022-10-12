@@ -8,4 +8,3 @@ spec:
     app-name: sqrt
   ports:
     - port: 80
-      targetPort: http #8080
