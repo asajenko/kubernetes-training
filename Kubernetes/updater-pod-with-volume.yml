@@ -29,6 +29,8 @@ spec:
       volumeMounts:
         - name: storage
           mountPath: /var/htdocs
+        - name: config
+          mountPath: /config
 
   volumes:
     - name: storage
@@ -38,7 +40,14 @@ spec:
 #      emptyDir:
 #        medium: Memory
 
-      glusterfs:
-        endpoints: gfs-volume-service
-        path: gv0
-        readOnly: false
+#      glusterfs:
+#        endpoints: gfs-volume-service
+#        path: gv0
+#        readOnly: false
+
+      persistentVolumeClaim:
+        claimName: updater-volume-claim
+
+    - name: config
+      configMap:
+        name: updater-config-map
