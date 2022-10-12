@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: training
+  name: updater-pod
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.23.0-alpine
+      ports:
+        - containerPort: 80
+    - name: updater
+      image: landrzejewski/updater:v2
+      args:
+        - '60'
+#      env:
+#        - name: INTERVAL
+#          #value: '60'
+#          valueFrom:
+#            configMapKeyRef:
+#              name: updater-config-map
+#              key: INTERVAL
+      envFrom:
+        - configMapRef:
+            name: updater-config-map
