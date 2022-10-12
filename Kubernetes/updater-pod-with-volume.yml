@@ -32,5 +32,13 @@ spec:
 
   volumes:
     - name: storage
-      hostPath:
-        path: /tmp/storage
+#      hostPath:
+#        path: /tmp/storage
+
+#      emptyDir:
+#        medium: Memory
+
+      glusterfs:
+        endpoints: gfs-volume-service
+        path: gv0
+        readOnly: false
