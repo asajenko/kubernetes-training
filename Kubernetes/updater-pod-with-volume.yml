@@ -9,6 +9,9 @@ spec:
       image: nginx:1.23.0-alpine
       ports:
         - containerPort: 80
+      volumeMounts:
+        - name: storage
+          mountPath: /usr/share/nginx/html
     - name: updater
       image: landrzejewski/updater:v2
       args:
@@ -23,3 +26,11 @@ spec:
       envFrom:
         - configMapRef:
             name: updater-config-map
+      volumeMounts:
+        - name: storage
+          mountPath: /var/htdocs
+
+  volumes:
+    - name: storage
+      hostPath:
+        path: /tmp/storage
