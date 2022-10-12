@@ -81,6 +81,6 @@ spec:
       spec:
         resources:
           requests:
-            - storage: 1G
+            storage: 1G
         accessModes:
           - ReadWriteOnce
