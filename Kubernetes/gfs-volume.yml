@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  namespace: training
+  name: gfs-volume
+spec:
+  capacity:
+    storage: 10G
+  accessModes:
+    - ReadWriteMany
+  glusterfs:
+    endpoints: gfs-volume-service
+    path: gv0
+    readOnly: false
