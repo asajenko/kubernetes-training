@@ -3,3 +3,8 @@ https://devopstales.github.io/kubernetes/k8s-user-accounts/
 https://loft.sh/blog/kubernetes-service-account-what-it-is-and-how-to-use-it
 https://kubernetes.io/docs/reference/access-authn-authz/rbac/
 
+https://www.manning.com/books/docker-in-action-second-edition
+https://www.manning.com/books/docker-in-practice-second-edition
+https://www.manning.com/books/bootstrapping-microservices-with-docker-kubernetes-and-terraform-second-edition
+https://www.manning.com/books/kubernetes-in-action-second-edition
+https://www.manning.com/books/cloud-native-spring-in-action
